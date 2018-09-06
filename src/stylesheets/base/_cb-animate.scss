@@ -1,0 +1,19 @@
+.cb-animate {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+
+  &.cb-infinite { animation-iteration-count: infinite; }
+
+  @for $i from 1 to 5 {
+    &.cb-delay-#{$i}s { animation-delay: #{$i}s }
+  }
+
+  @each $key, $value in $speed {
+    &.cb-#{$key} { animation-duration: $value; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: unset !important;
+    transition: none !important;
+  }
+}
