@@ -1,13 +1,6 @@
 @keyframes spin {
-  from {
-    animation-timing-function: cubic-bezier(.8, .8, .3, 1);
-    transform: rotate3d(0, 1, 0, 0deg);
-  }
-
-  to {
-    transform: rotate3d(0, 1, 0, 360deg);
-    animation-timing-function: cubic-bezier(.2, .2, .7, .1);
-  }
+  0% { transform: rotate3d(0, 1, 0, 0); }
+  100% { transform: rotate3d(0, 1, 0, 360deg); }
 }
 
 .cb-spin { animation-name: spin; }
