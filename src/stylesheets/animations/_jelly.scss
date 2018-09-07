@@ -1,0 +1,20 @@
+@keyframes jelly {
+  0%,
+  11%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  22% { transform: skewX(-12deg) skewY(-12deg); }
+  33% { transform: skewX(6deg) skewY(6deg); }
+  44% { transform: skewX(-3deg) skewY(-3deg); }
+  55% { transform: skewX(1.5deg) skewY(1.5deg); }
+  66% { transform: skewX(-.75deg) skewY(-.75deg); }
+  77% { transform: skewX(.375deg) skewY(.375deg); }
+  88% { transform: skewX(-.1875deg) skewY(-.1875deg); }
+}
+
+.cb-jelly {
+  animation-name: jelly;
+  transform-origin: center;
+}

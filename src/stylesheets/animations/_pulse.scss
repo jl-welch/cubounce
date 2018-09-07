@@ -1,0 +1,10 @@
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% { transform: scale3d(1.1, 1.1, 1.1); }
+}
+
+.cb-pulse { animation-name: pulse; }
