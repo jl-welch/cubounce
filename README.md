@@ -1,11 +1,10 @@
 # cubounce
 
-Fading, bouncing, sliding and other jazzy animations.
+A set of powerful CSS animations.
 
-A little JavaScript as an added extra for:
-* Adding, toggling & removing animations
-* Detecting when an animation ends & running a callback
-
-* A bunch of cool animations
 * Simple class names
-* A little JavaScript magic
+* Animations for entrances, exits and whatever else
+
+Use the small JS library to help generate animations with ease.
+
+...
