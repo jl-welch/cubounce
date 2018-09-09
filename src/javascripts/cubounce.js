@@ -17,54 +17,49 @@ const Cubounce = (() => {
     "spin"
   ];
 
-  class Cubounce {
+  const Cubounce = {
+    animationStart(element, name) {
+      this.animationListener = this.removeClass.bind(this, element, name);
+      element.addEventListener("animationend", this.animationListener);
+    },
+
+    animationEnd(element) {
+      element.removeEventListener("animationend", this.animationListener);
+    },
+    
+    addClass(element, name) {
+      this.animationStart(element, name);
+      element.classList.add(className.ANIMATE, `cb-${name}`);
+    },
+
+    removeClass(element, name) {
+      element.classList.remove(className.ANIMATE, `cb-${name}`);
+      this.animationEnd(element);
+    },
+
+    isArray(obj) {
+      if (obj) return obj.constructor === Array;
+    },
+    
     animate(selector, name) {
-      if (name.indexOf("cb-") !== -1) name = name.slice(3);
+      if (!selector || !name) return;
+      if (name.indexOf("cb-") === 0) name = name.slice(3);
       if (!animation.includes(name)) return;
-      if (!selector) return;
 
-      let element;
+      if (this.isArray(selector)) {
+        selector.map(currentSelector => document.querySelector(currentSelector))
+        .forEach(element => this.addClass(element, name));
 
-      let addAnimationClass = (element) => {
-        if (!element) return;
-        this.animateEnd(element, `cb-${name}`);
-        element.classList.add(className.ANIMATE, `cb-${name}`);
+        return;
       }
 
-      if (selector.constructor === Array) {
-        element = selector.map(currentSelector => document.querySelector(currentSelector));
-        element.forEach(currentElement => {
-          addAnimationClass(currentElement);
-        });
-      } else {
-        element = document.querySelector(selector);
-        addAnimationClass(element);
-      }
-    }
+      this.addClass(document.querySelector(selector), name);
+    },
 
-    animateEnd(element, name) {
-      if (!element) return;
 
-      let removeAnimationClass = element => {  
-        element.classList.remove(className.ANIMATE, name);
-        element.removeEventListener("animationend", removeAnimationClass);
-      }
-
-      let removeAnimation = element => {
-        if (!element) return;
-        removeAnimationClass = removeAnimationClass.bind(this, element);
-        element.addEventListener("animationend", removeAnimationClass);
-      }
-
-      if (element.constructor === Array) {
-        element.forEach(currentElement => {
-          removeAnimation(currentElement, name);
-        });
-      } else {
-        removeAnimation(element);
-      }
-    }
   }
 
-  return new Cubounce();
+  return Cubounce;
 })();
+
+Cubounce.animate("#yo", "cb-bounce");
