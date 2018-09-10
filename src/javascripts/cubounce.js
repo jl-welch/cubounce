@@ -17,49 +17,54 @@ const Cubounce = (() => {
     "spin"
   ];
 
+  const errorMessage = {
+    NOSELECTOR:   "Please enter a valid selector.",
+    NONAME:       "Please enter a valid animation name.",
+    NOANIMATION:  `Beep boop. Whoops! Animation not found. Boop.`
+  }
+
   const Cubounce = {
-    animationStart(element, name) {
-      this.animationListener = this.removeClass.bind(this, element, name);
-      element.addEventListener("animationend", this.animationListener);
-    },
+    handleAnimation(element, name) {
+      let animationHandler = (listenerMethod) => element[listenerMethod]("animationend", removeClass);
+      let classHandler     = (classMethod)    => element.classList[classMethod](className.ANIMATE, `cb-${name}`);
 
-    animationEnd(element) {
-      element.removeEventListener("animationend", this.animationListener);
-    },
-    
-    addClass(element, name) {
-      this.animationStart(element, name);
-      element.classList.add(className.ANIMATE, `cb-${name}`);
-    },
+      let removeClass = () => {
+        classHandler("remove")
+        animationHandler("removeEventListener");
+      }
 
-    removeClass(element, name) {
-      element.classList.remove(className.ANIMATE, `cb-${name}`);
-      this.animationEnd(element);
+      animationHandler("addEventListener");
+      classHandler("add");
     },
 
     isArray(obj) {
       if (obj) return obj.constructor === Array;
     },
+
+    logError(message) {
+      console.error(message);
+    },
     
     animate(selector, name) {
-      if (!selector || !name) return;
+      if (!selector) return this.logError(errorMessage.NOSELECTOR);
+      if (!name)     return this.logError(errorMessage.NONAME);
       if (name.indexOf("cb-") === 0) name = name.slice(3);
-      if (!animation.includes(name)) return;
+      if (!animation.includes(name)) return this.logError(errorMessage.NOANIMATION);
 
       if (this.isArray(selector)) {
         selector.map(currentSelector => document.querySelector(currentSelector))
-        .forEach(element => this.addClass(element, name));
+        .forEach(element => this.handleAnimation(element, name));
 
         return;
       }
 
-      this.addClass(document.querySelector(selector), name);
-    },
-
-
+      this.handleAnimation(document.querySelector(selector), name);
+    }
   }
 
   return Cubounce;
 })();
 
-Cubounce.animate("#yo", "cb-bounce");
+Cubounce.animate(["#yo", "#oy"], "cb-hurr");
+
+//Cubounce.animate("#oy", "cb-bounce");
