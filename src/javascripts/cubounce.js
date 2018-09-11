@@ -1,15 +1,15 @@
 const Cubounce = (() => {
-
   const className = {
-    ANIMATE:  "cb-animate",
-    INFINITE: "cb-infinite",
-    SLOWEST:  "cb-slowest",
-    SLOW:     "cb-slow",
-    FAST:     "cb-fast",
-    FASTEST:  "cb-fastest"
-  }
+    ANIMATE:  "cb-animate"
+  };
 
-  const animation = [
+  const errorMessage = {
+    NOSELECTOR:   "No element selector provided.",
+    NONAME:       "No animation name provided.",
+    NOANIMATION:  "No animation with that name found."
+  };
+
+  const animationName = [
     "bounce",
     "flash",
     "jelly",
@@ -17,54 +17,55 @@ const Cubounce = (() => {
     "spin"
   ];
 
-  const errorMessage = {
-    NOSELECTOR:   "Please enter a valid selector.",
-    NONAME:       "Please enter a valid animation name.",
-    NOANIMATION:  `Beep boop. Whoops! Animation not found. Boop.`
-  }
-
   const Cubounce = {
-    handleAnimation(element, name) {
+    handleAnimation(element, options) {
+      let {animation, duration, delay, loop} = options;
+
+      if (duration && this.checkType(duration, Number)) this.setAnimationProperty(element, "animationDuration", `${duration}ms`);
+      if (delay    && this.checkType(delay, Number))    this.setAnimationProperty(element, "animationDelay", `${delay}ms`);
+      if (loop     && this.checkType(loop, Boolean))    this.setAnimationProperty(element, "animationIterationCount", "infinite");
+
       let animationHandler = (listenerMethod) => element[listenerMethod]("animationend", removeClass);
-      let classHandler     = (classMethod)    => element.classList[classMethod](className.ANIMATE, `cb-${name}`);
+      let classHandler     = (classMethod)    => element.classList[classMethod](className.ANIMATE, `cb-${animation}`);
 
       let removeClass = () => {
-        classHandler("remove")
+        classHandler("remove");
         animationHandler("removeEventListener");
-      }
+      };
 
-      animationHandler("addEventListener");
+      if (!loop) animationHandler("addEventListener");
       classHandler("add");
     },
 
-    isArray(obj) {
-      if (obj) return obj.constructor === Array;
+    checkType(obj, type) {
+      if (obj) return obj["constructor"] === type;
     },
 
     logError(message) {
       console.error(message);
     },
-    
-    animate(selector, name) {
-      if (!selector) return this.logError(errorMessage.NOSELECTOR);
-      if (!name)     return this.logError(errorMessage.NONAME);
-      if (name.indexOf("cb-") === 0) name = name.slice(3);
-      if (!animation.includes(name)) return this.logError(errorMessage.NOANIMATION);
 
-      if (this.isArray(selector)) {
+    setAnimationProperty(element, property, value) {
+      element.style[property] = value;
+    },
+    
+    animate(options) {
+      let {selector, animation} = options;
+
+      if (!selector)  return this.logError(errorMessage.NOSELECTOR);
+      if (!animation) return this.logError(errorMessage.NONAME);
+      if (!animationName.includes(animation)) return this.logError(errorMessage.NOANIMATION);
+
+      if (this.checkType(selector, Array)) {
         selector.map(currentSelector => document.querySelector(currentSelector))
-        .forEach(element => this.handleAnimation(element, name));
+        .forEach(element => this.handleAnimation(element, options));
 
         return;
       }
 
-      this.handleAnimation(document.querySelector(selector), name);
+      this.handleAnimation(document.querySelector(selector), options);
     }
-  }
+  };
 
   return Cubounce;
 })();
-
-Cubounce.animate(["#yo", "#oy"], "cb-hurr");
-
-//Cubounce.animate("#oy", "cb-bounce");
