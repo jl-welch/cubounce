@@ -71,15 +71,21 @@ Example of manually adding an animation through HTML
 | `cb-pulse`  |
 | `cb-spin`   |
 
+**Note:** When adding animations through Cubounce.js, _'cb-'_ is not required.
+
 ### Delay and Speed
+
+These class names _aren't_ required.
 
 | Class Name    | Delay Time |
 | ------------- | ---------- |
-| `cb-delay-1s` | `2s`       |
+| `cb-delay-1s` | `1s`       |
 | `cb-delay-2s` | `2s`       |
 | `cb-delay-3s` | `3s`       |
 | `cb-delay-4s` | `4s`       |
 | `cb-delay-5s` | `5s`       |
+
+**Note:** By default, there is no delay.
 
 | Class Name   | Speed      |
 | ------------ | ---------- |
@@ -87,3 +93,5 @@ Example of manually adding an animation through HTML
 | `cb-slow`    | `2s`       |
 | `cb-fast`    | `750ms`    |
 | `cb-fastest` | `400ms`    |
+
+**Note:** By default, the speed of each animation is 1s.
