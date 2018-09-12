@@ -17,53 +17,58 @@ const Cubounce = (() => {
     "spin"
   ];
 
+  function logError(message) {
+    console.error(message);
+  }
+
+  function checkType(obj, type) {
+    if (obj) return obj["constructor"] === type;
+  }
+
+  function setAnimationProperty(element, property, value) {
+    element.style[property] = value;
+  }
+
+  function classHandler(animation, element, method) {
+    element.classList[method](className.ANIMATE, `cb-${animation}`);
+  }
+
+  function animationEvent(element, method) {
+    element[method]("animationend", animationEnd);
+  }
+
+  function animationEnd(event) {
+    classHandler(event.animationName, event.srcElement, "remove");
+    animationEvent(event.srcElement, "removeEventListener");
+  }
+
+  function handleAnimation(element, options) {
+    let {animation, duration, delay, loop} = options;
+
+    if (duration && checkType(duration, Number)) setAnimationProperty(element, "animationDuration", `${duration}ms`);
+    if (delay    && checkType(delay, Number))    setAnimationProperty(element, "animationDelay", `${delay}ms`);
+    if (loop     && checkType(loop, Boolean))    setAnimationProperty(element, "animationIterationCount", "infinite");
+
+    if (!loop) animationEvent(element, "addEventListener");
+    classHandler(animation, element, "add");
+  }
+
   const Cubounce = {
-    handleAnimation(element, options) {
-      let {animation, duration, delay, loop} = options;
-
-      if (duration && this.checkType(duration, Number)) this.setAnimationProperty(element, "animationDuration", `${duration}ms`);
-      if (delay    && this.checkType(delay, Number))    this.setAnimationProperty(element, "animationDelay", `${delay}ms`);
-      if (loop     && this.checkType(loop, Boolean))    this.setAnimationProperty(element, "animationIterationCount", "infinite");
-
-      let animationHandler = (listenerMethod) => element[listenerMethod]("animationend", removeClass);
-      let classHandler     = (classMethod)    => element.classList[classMethod](className.ANIMATE, `cb-${animation}`);
-
-      let removeClass = () => {
-        classHandler("remove");
-        animationHandler("removeEventListener");
-      };
-
-      if (!loop) animationHandler("addEventListener");
-      classHandler("add");
-    },
-
-    checkType(obj, type) {
-      if (obj) return obj["constructor"] === type;
-    },
-
-    logError(message) {
-      console.error(message);
-    },
-
-    setAnimationProperty(element, property, value) {
-      element.style[property] = value;
-    },
-    
     animate(options) {
       let {selector, animation} = options;
 
-      if (!selector)  return this.logError(errorMessage.NOSELECTOR);
-      if (!animation) return this.logError(errorMessage.NONAME);
-      if (!animationName.includes(animation)) return this.logError(errorMessage.NOANIMATION);
+      if (!selector)  return logError(errorMessage.NOSELECTOR);
+      if (!animation) return logError(errorMessage.NONAME);
+      if (!animationName.includes(animation)) return logError(errorMessage.NOANIMATION);
 
-      if (this.checkType(selector, Array)) {
+      if (checkType(selector, Array)) {
         selector.map(currentSelector => document.querySelector(currentSelector))
-        .forEach(element => this.handleAnimation(element, options));
+        .forEach(element => handleAnimation(element, options));
 
         return;
       }
 
-      this.handleAnimation(document.querySelector(selector), options);
+      handleAnimation(document.querySelector(selector), options);
     }
   };
 
