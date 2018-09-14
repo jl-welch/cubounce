@@ -30,27 +30,21 @@ Include CSS in head and if needed JS before end of body
 
 ```javascript
 const options = {
-  selector:   "#heading",
-  animation:  "bounce", // "cb-bounce" works too
+  animation:  "bounce", // omit "cb-"
   duration:   800, // ms
   delay:      200,
-  loop:       true // infinite
+  count:      4 // accepts "infinite"
 }
 
-Cubounce.animate(options);
+cb("#title").animate(options);
 ```
 
-This will add the correct classes to the given selector.
-
-Want to add the same animation to multiple classes? Just use an array:
+### Advanced selectors
 
 ```javascript
-const options = {
-  selector: ["#heading", "#paragraph"],
-  // ...
-}
+const options = {animation: "jelly"};
 
-Cubounce.animate(options);
+cb(".header > [data-title]").animate(options);
 ```
 
 ## Using Cubounce in HTML
@@ -71,11 +65,11 @@ Example of manually adding an animation through HTML
 | `cb-pulse`  |
 | `cb-spin`   |
 
-**Note:** When adding animations through Cubounce.js, _'cb-'_ is not required.
+**Note:** When adding animations through Cubounce.js, _'cb-'_ should be omitted.
 
 ### Delay and Speed
 
-These class names _aren't_ required.
+_These class names aren't required_.
 
 | Class Name    | Delay Time |
 | ------------- | ---------- |

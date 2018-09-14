@@ -1,14 +1,5 @@
-const Cubounce = (() => {
-  const className = {
-    ANIMATE:  "cb-animate"
-  };
-
-  const errorMessage = {
-    NOSELECTOR:   "No element selector provided.",
-    NONAME:       "No animation name provided.",
-    NOANIMATION:  "No animation with that name found."
-  };
-
+const cb = (() => {
+  const className = "cb-animate";
   const animationName = [
     "bounce",
     "flash",
@@ -17,60 +8,60 @@ const Cubounce = (() => {
     "spin"
   ];
 
-  function logError(message) {
-    console.error(message);
-  }
-
-  function checkType(obj, type) {
-    if (obj) return obj["constructor"] === type;
-  }
-
-  function setAnimationProperty(element, property, value) {
-    element.style[property] = value;
+  function typeOf(obj, type) {
+    if (obj && type) return obj["constructor"] === type;
   }
 
   function classHandler(animation, element, method) {
-    element.classList[method](className.ANIMATE, `cb-${animation}`);
+    element.classList[method](className, `cb-${animation}`);
   }
 
-  function animationEvent(element, method) {
-    element[method]("animationend", animationEnd);
+  function animateEvent(element, method) {
+    element[method]("animationend", animateEnd);
   }
 
-  function animationEnd(event) {
-    classHandler(event.animationName, event.srcElement, "remove");
-    animationEvent(event.srcElement, "removeEventListener");
+  function animateEnd({ animationName, srcElement }) {
+    classHandler(animationName, srcElement, "remove");
+    animateEvent(srcElement, "removeEventListener");
   }
 
-  function handleAnimation(element, options) {
-    let {animation, duration, delay, loop} = options;
+  function animate(element, options) {
+    let {animation, duration, delay, count} = options;
+    if (!animation || !animationName.includes(animation)) return this;
 
-    if (duration && checkType(duration, Number)) setAnimationProperty(element, "animationDuration", `${duration}ms`);
-    if (delay    && checkType(delay, Number))    setAnimationProperty(element, "animationDelay", `${delay}ms`);
-    if (loop     && checkType(loop, Boolean))    setAnimationProperty(element, "animationIterationCount", "infinite");
+    console.log(count);
 
-    if (!loop) animationEvent(element, "addEventListener");
+    if (typeOf(duration, Number)) element.style.animationDuration = `${duration}ms`;
+    if (typeOf(delay, Number))    element.style.animationDelay = `${delay}ms`;
+    if (typeOf(count, Number) || count === "infinite") element.style.animationIterationCount = count;
+
+    if (count !== "infinite") animateEvent(element, "addEventListener");
     classHandler(animation, element, "add");
   }
 
-  const Cubounce = {
-    animate(options) {
-      let {selector, animation} = options;
+  let cb = function(selector) {
+    return new cb.fn.init(selector);
+  }
 
-      if (!selector)  return logError(errorMessage.NOSELECTOR);
-      if (!animation) return logError(errorMessage.NONAME);
-      if (!animationName.includes(animation)) return logError(errorMessage.NOANIMATION);
+  cb.fn = cb.prototype;
 
-      if (checkType(selector, Array)) {
-        selector.map(currentSelector => document.querySelector(currentSelector))
-        .forEach(element => handleAnimation(element, options));
+  cb.fn.init = function(selector) {
+    if (!selector || typeof selector !== "string") return this;
 
-        return;
-      }
+    this.el = document.querySelectorAll(selector);
 
-      handleAnimation(document.querySelector(selector), options);
-    }
-  };
+    return this;
+  }
 
-  return Cubounce;
+  cb.fn.init.prototype = cb.fn;
+
+  cb.fn.animate = function(options) {
+    if (!this.el.length || !options) return this;
+    
+    this.el.forEach(element => animate(element, options));
+
+    return this;
+  }
+
+  return cb;
 })();
