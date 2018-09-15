@@ -28,23 +28,22 @@ Include CSS in head and if needed JS before end of body
 
 ## Using Cubounce through Cubounce.js
 
+**Note:** When adding animations through Cubounce.js, _'cb-'_ should be omitted.
+
 ```javascript
 const options = {
-  animation:  "bounce", // omit "cb-"
   duration:   800, // ms
   delay:      200,
   count:      4 // accepts "infinite"
 }
 
-cb("#title").animate(options);
+cb("#title").animate("bounce", options);
 ```
 
 ### Advanced selectors
 
 ```javascript
-const options = {animation: "jelly"};
-
-cb(".header > [data-title]").animate(options);
+cb(".header > [data-title]").animate("jelly");
 ```
 
 ## Using Cubounce in HTML
@@ -64,8 +63,6 @@ Example of manually adding an animation through HTML
 | `cb-jelly`  |
 | `cb-pulse`  |
 | `cb-spin`   |
-
-**Note:** When adding animations through Cubounce.js, _'cb-'_ should be omitted.
 
 ### Delay and Speed
 
