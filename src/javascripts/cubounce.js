@@ -25,11 +25,9 @@ const cb = (() => {
     animateEvent(srcElement, "removeEventListener");
   }
 
-  function animate(element, options) {
-    let {animation, duration, delay, count} = options;
+  function animate(element, animation, options) {
     if (!animation || !animationName.includes(animation)) return this;
-
-    console.log(count);
+    let {duration, delay, count} = options;
 
     if (typeOf(duration, Number)) element.style.animationDuration = `${duration}ms`;
     if (typeOf(delay, Number))    element.style.animationDelay = `${delay}ms`;
@@ -50,15 +48,17 @@ const cb = (() => {
 
     this.el = document.querySelectorAll(selector);
 
+    console.log(this.el);
+
     return this;
   }
 
   cb.fn.init.prototype = cb.fn;
 
-  cb.fn.animate = function(options) {
-    if (!this.el.length || !options) return this;
+  cb.fn.animate = function(animation, options = {}) {
+    if (!this.el || !this.el.length) return this;
     
-    this.el.forEach(element => animate(element, options));
+    this.el.forEach(element => animate(element, animation, options));
 
     return this;
   }
