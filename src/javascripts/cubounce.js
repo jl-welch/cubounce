@@ -48,8 +48,6 @@ const cb = (() => {
 
     this.el = document.querySelectorAll(selector);
 
-    console.log(this.el);
-
     return this;
   }
 

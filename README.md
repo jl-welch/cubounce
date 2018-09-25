@@ -56,13 +56,18 @@ Example of manually adding an animation through HTML
 
 ### Available animations
 
-| Class Name  |
-| ----------- |
-| `cb-bounce` |
-| `cb-flash`  |
-| `cb-jelly`  |
-| `cb-pulse`  |
-| `cb-spin`   |
+| Class Name          |                     |                     |
+| ------------------- | ------------------- | ------------------- |
+| `cb-bounce`         | `cb-bounceOut`      | `cb-fadeOut`        |
+| `cb-flash`          | `cb-bounceOutDown`  | `cb-fadeOutDown`    |
+| `cb-jelly`          | `cb-bounceOutLeft`  | `cb-fadeOutLeft`    |
+| `cb-pulse`          | `cb-bounceOutRight` | `cb-fadeOutRight`   |
+| `cb-spin`           | `cb-bounceOutUp`    | `cb-fadeOutUp`      |
+| `cb-bounceIn`       | `cb-fadeIn`         |
+| `cb-bounceInDown`   | `cb-fadeInDown`     |
+| `cb-bounceInLeft`   | `cb-fadeInLeft`     |
+| `cb-bounceInRight`  | `cb-fadeInRight`    |
+| `cb-bounceInUp`     | `cb-fadeInUp`       |
 
 ### Delay and Speed
 
