@@ -1,40 +1,21 @@
 const cb = (() => {
-  const className = "cb-animate";
-  const animationName = [
-    "bounce",
-    "flash",
-    "jelly",
-    "pulse",
-    "spin"
-  ];
-
-  function typeOf(obj, type) {
-    if (obj && type) return obj["constructor"] === type;
-  }
-
-  function classHandler(animation, element, method) {
-    element.classList[method](className, `cb-${animation}`);
-  }
-
-  function animateEvent(element, method) {
-    element[method]("animationend", animateEnd);
-  }
+  const cbAnimate = "cb-animate";
 
   function animateEnd({ animationName, srcElement }) {
-    classHandler(animationName, srcElement, "remove");
-    animateEvent(srcElement, "removeEventListener");
+    srcElement.classList.remove(cbAnimate, `cb-${animationName}`);
+    srcElement.removeEventListener("animationend", animateEnd);
   }
 
   function animate(element, animation, options) {
-    if (!animation || !animationName.includes(animation)) return this;
+    if (!animation) return this;
     let {duration, delay, count} = options;
 
-    if (typeOf(duration, Number)) element.style.animationDuration = `${duration}ms`;
-    if (typeOf(delay, Number))    element.style.animationDelay = `${delay}ms`;
-    if (typeOf(count, Number) || count === "infinite") element.style.animationIterationCount = count;
+    if (!isNaN(duration)) element.style.animationDuration = `${duration}ms`;
+    if (!isNaN(delay))    element.style.animationDelay = `${delay}ms`;
+    if (!isNaN(count) || count === "infinite") element.style.animationIterationCount = count;
 
-    if (count !== "infinite") animateEvent(element, "addEventListener");
-    classHandler(animation, element, "add");
+    if (count !== "infinite") element.addEventListener("animationend", animateEnd);
+    element.classList.add(cbAnimate, `cb-${animation}`);
   }
 
   let cb = function(selector) {
