@@ -21,7 +21,7 @@
     }
 
     body {
-      overflow: hidden;
+      overflow-x: hidden;
       font-family: "Nunito", sans-serif;
       color: #eee;
       background: #6a3093;
@@ -39,7 +39,7 @@
     option { color: #444; }
 
     .header,
-    main {
+    .content {
       display: flex;
       height: 50vh;
       width: 100%;
@@ -47,17 +47,39 @@
       justify-content: center;
     }
 
+    .header {
+      min-height: 300px;
+      flex-direction: column;
+    }
+
+    .content { align-items: flex-start; }
+
     #cb {
-      font-size: 5rem;
+      font-size: 14rem;
       font-family: "Oleo Script", sans-serif;
     }
 
-    #cb-select,
+    #cb-select { margin-right: .45rem; }
+
     #cb-button {
-      padding: 1rem 1.75rem;
+      font-weight: bold;
+      color: #6a3093;
+      background-color: #fff;
+    }
+
+    .input {
+      padding: 1.25rem 1.95rem;
       border: 1px solid #eee;
+      border-radius: 3px;
       color: #eee;
       background: none;
+    }
+
+    .header__slogan { font-size: 2rem; }
+
+    @media screen and (max-width: 768px) {
+      #cb { font-size: 6rem; }
+      .header__slogan { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -65,10 +87,11 @@
 
   <header class="header">
     <h1 class="header__title" id="cb">Cubounce</h1>
+    <p class="header__slogan">Proper cool CSS animation stuff right there</p>
   </header>
 
-  <main>
-    <select id="cb-select">
+  <main class="content">
+    <select class="input" id="cb-select">
       <optgroup label="Basic">
         <option value="bounce">Bounce</option>
         <option value="flash">Flash</option>
@@ -100,15 +123,21 @@
         <option value="fadeOutDown">fadeOutDown</option>
         <option value="fadeOutLeft">fadeOutLeft</option>
       </optgroup>
-      </select>
+    </select>
+    <button class="input" id="cb-button" role="button">
+      Animate!
+    </button>
   </main>
 
   <script src="dist/javascripts/cubounce.min.js"></script>
   <script>
-    const title  = document.querySelector("#cb");
     const select = document.querySelector("#cb-select");
+    const button = document.querySelector("#cb-button");
 
-    select.addEventListener("change", _ => cb("#cb").animate(select.value));
+    const event  = e => cb("#cb").animate(select.value);
+
+    select.addEventListener("change", event);
+    button.addEventListener("click", event)
   </script>
 </body>
 </html>
