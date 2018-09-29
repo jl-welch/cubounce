@@ -43,23 +43,22 @@
       display: flex;
       height: 50vh;
       width: 100%;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .header {
-      min-height: 300px;
-      flex-direction: column;
-    }
+    .header { min-height: 300px; }
+    .content { justify-content: flex-start; }
 
-    .content { align-items: flex-start; }
+    .header__slogan { font-size: 2rem; }
 
     #cb {
       font-size: 14rem;
       font-family: "Oleo Script", sans-serif;
     }
 
-    #cb-select { margin-right: .45rem; }
+    #cb-select {margin-right: .25rem; }
 
     #cb-button {
       font-weight: bold;
@@ -73,9 +72,18 @@
       border-radius: 3px;
       color: #eee;
       background: none;
+      cursor: pointer;
     }
 
-    .header__slogan { font-size: 2rem; }
+    .text-link {
+      margin-top: 1.75rem;
+      font-size: 1.75rem;
+      text-decoration: none;
+      color: rgba(238, 238, 238, .85);
+      transition: color .3s ease;
+    }
+
+    .text-link:hover { color: #fff; }
 
     @media screen and (max-width: 768px) {
       #cb { font-size: 6rem; }
@@ -87,46 +95,49 @@
 
   <header class="header">
     <h1 class="header__title" id="cb">Cubounce</h1>
-    <p class="header__slogan">Proper cool CSS animation stuff right there</p>
+    <p class="header__slogan cb-animate cb-pulse cb-infinite cb-slowest">Proper cool CSS animation stuff right there</p>
   </header>
 
   <main class="content">
-    <select class="input" id="cb-select">
-      <optgroup label="Basic">
-        <option value="bounce">Bounce</option>
-        <option value="flash">Flash</option>
-        <option value="jelly">Jelly</option>
-        <option value="pulse">Pulse</option>
-        <option value="spin">Spin</option>
-      </optgroup>
-      <optgroup label="Bouncing">
-        <option value="bounceIn">bounceIn</option>
-        <option value="bounceInUp">bounceInUp</option>
-        <option value="bounceInRight">bounceInRight</option>
-        <option value="bounceInDown">bounceInDown</option>
-        <option value="bounceInLeft">bounceInLeft</option>
-        <option value="bounceOut">bounceOut</option>
-        <option value="bounceOutUp">bounceOutUp</option>
-        <option value="bounceOutRight">bounceOutRight</option>
-        <option value="bounceOutDown">bounceOutDown</option>
-        <option value="bounceOutLeft">bounceOutLeft</option>
-      </optgroup>
-      <optgroup label="Fading">
-        <option value="fadeIn">fadeIn</option>
-        <option value="fadeInUp">fadeInUp</option>
-        <option value="fadeInRight">fadeInRight</option>
-        <option value="fadeInDown">fadeInDown</option>
-        <option value="fadeInLeft">fadeInLeft</option>
-        <option value="fadeOut">fadeOut</option>
-        <option value="fadeOutUp">fadeOutUp</option>
-        <option value="fadeOutRight">fadeOutRight</option>
-        <option value="fadeOutDown">fadeOutDown</option>
-        <option value="fadeOutLeft">fadeOutLeft</option>
-      </optgroup>
-    </select>
-    <button class="input" id="cb-button" role="button">
-      Animate!
-    </button>
+    <form>
+      <select class="input" id="cb-select">
+        <optgroup label="Basic">
+          <option value="bounce">Bounce</option>
+          <option value="flash">Flash</option>
+          <option value="jelly">Jelly</option>
+          <option value="pulse">Pulse</option>
+          <option value="spin">Spin</option>
+        </optgroup>
+        <optgroup label="Bouncing">
+          <option value="bounceIn">bounceIn</option>
+          <option value="bounceInUp">bounceInUp</option>
+          <option value="bounceInRight">bounceInRight</option>
+          <option value="bounceInDown">bounceInDown</option>
+          <option value="bounceInLeft">bounceInLeft</option>
+          <option value="bounceOut">bounceOut</option>
+          <option value="bounceOutUp">bounceOutUp</option>
+          <option value="bounceOutRight">bounceOutRight</option>
+          <option value="bounceOutDown">bounceOutDown</option>
+          <option value="bounceOutLeft">bounceOutLeft</option>
+        </optgroup>
+        <optgroup label="Fading">
+          <option value="fadeIn">fadeIn</option>
+          <option value="fadeInUp">fadeInUp</option>
+          <option value="fadeInRight">fadeInRight</option>
+          <option value="fadeInDown">fadeInDown</option>
+          <option value="fadeInLeft">fadeInLeft</option>
+          <option value="fadeOut">fadeOut</option>
+          <option value="fadeOutUp">fadeOutUp</option>
+          <option value="fadeOutRight">fadeOutRight</option>
+          <option value="fadeOutDown">fadeOutDown</option>
+          <option value="fadeOutLeft">fadeOutLeft</option>
+        </optgroup>
+      </select>
+      <button class="input" id="cb-button" role="button">
+        Animate!
+      </button>
+    </form>
+    <a class="text-link" href="https://github.com/jl-welch/cubounce" target="_blank">View project on Github</a>
   </main>
 
   <script src="dist/javascripts/cubounce.min.js"></script>
