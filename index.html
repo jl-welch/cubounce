@@ -147,7 +147,10 @@
     const select = document.querySelector("#cb-select");
     const button = document.querySelector("#cb-button");
 
-    const event  = e => cb("#cb").animate(select.value);
+    const event  = e => {
+      e.preventDefault();
+      cb("#cb").animate(select.value);
+    }
 
     select.addEventListener("change", event);
     button.addEventListener("click", event)
