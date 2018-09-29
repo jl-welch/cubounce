@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cubounce - A set of powerful, easy to use CSS animations</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Nunito|Oleo+Script" rel="stylesheet">
+  <link rel="stylesheet" href="dist/stylesheets/cubounce.min.css">
+
+  <style>
+    *, *:before, *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 10px;
+    }
+
+    body {
+      overflow: hidden;
+      font-family: "Nunito", sans-serif;
+      color: #eee;
+      background: #6a3093;
+      background: -webkit-linear-gradient(to right, #a044ff, #6a3093);
+      background: linear-gradient(to right, #a044ff, #6a3093);
+    }
+
+    select, button {
+      -webkit-appearance: none;
+         -moz-appearance: none;
+              appearance: none;
+    }
+
+    optgroup { color: #222; }
+    option { color: #444; }
+
+    .header,
+    main {
+      display: flex;
+      height: 50vh;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cb {
+      font-size: 5rem;
+      font-family: "Oleo Script", sans-serif;
+    }
+
+    #cb-select,
+    #cb-button {
+      padding: 1rem 1.75rem;
+      border: 1px solid #eee;
+      color: #eee;
+      background: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1 class="header__title" id="cb">Cubounce</h1>
+  </header>
+
+  <main>
+    <select id="cb-select">
+      <optgroup label="Basic">
+        <option value="bounce">Bounce</option>
+        <option value="flash">Flash</option>
+        <option value="jelly">Jelly</option>
+        <option value="pulse">Pulse</option>
+        <option value="spin">Spin</option>
+      </optgroup>
+      <optgroup label="Bouncing">
+        <option value="bounceIn">bounceIn</option>
+        <option value="bounceInUp">bounceInUp</option>
+        <option value="bounceInRight">bounceInRight</option>
+        <option value="bounceInDown">bounceInDown</option>
+        <option value="bounceInLeft">bounceInLeft</option>
+        <option value="bounceOut">bounceOut</option>
+        <option value="bounceOutUp">bounceOutUp</option>
+        <option value="bounceOutRight">bounceOutRight</option>
+        <option value="bounceOutDown">bounceOutDown</option>
+        <option value="bounceOutLeft">bounceOutLeft</option>
+      </optgroup>
+      <optgroup label="Fading">
+        <option value="fadeIn">fadeIn</option>
+        <option value="fadeInUp">fadeInUp</option>
+        <option value="fadeInRight">fadeInRight</option>
+        <option value="fadeInDown">fadeInDown</option>
+        <option value="fadeInLeft">fadeInLeft</option>
+        <option value="fadeOut">fadeOut</option>
+        <option value="fadeOutUp">fadeOutUp</option>
+        <option value="fadeOutRight">fadeOutRight</option>
+        <option value="fadeOutDown">fadeOutDown</option>
+        <option value="fadeOutLeft">fadeOutLeft</option>
+      </optgroup>
+      </select>
+  </main>
+
+  <script src="dist/javascripts/cubounce.min.js"></script>
+  <script>
+    const title  = document.querySelector("#cb");
+    const select = document.querySelector("#cb-select");
+
+    select.addEventListener("change", _ => cb("#cb").animate(select.value));
+  </script>
+</body>
+</html>
