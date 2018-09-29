@@ -17,7 +17,7 @@ gulp.task("sass", function() {
       }))
       .pipe(clean())
       .pipe(rename({ suffix: '.min' }))
-      .pipe(gulp.dest("dist/stylehseets"));
+      .pipe(gulp.dest("dist/stylesheets"));
 });
 
 gulp.task("js", function() {
